@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <title>HR Quiz — Inson resurslarini boshqarish</title>
+    <meta name="description" content="Inson resurslarini boshqarish fanidan test, chuqurlashtirilgan statistika va tahlil platformasi">
+    <meta name="theme-color" content="#0f172a">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="style.css">
+    
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎯</text></svg>">
+</head>
+<body>
+    <!-- Interaktiv Animatsiya -->
+    <div class="bg-mesh">
+        <div class="blob blob-emerald"></div>
+        <div class="blob blob-blue"></div>
+        <div class="blob blob-teal"></div>
+        <div class="blob blob-purple"></div>
+    </div>
+    <canvas id="fx"></canvas>
+
+    <!-- Professional Boot Terminal Sequence -->
+    <div id="boot">
+        <div class="term-window">
+            <div class="term-header">
+                <span class="dot red"></span>
+                <span class="dot yellow"></span>
+                <span class="dot green"></span>
+                <span class="term-title">root@salmon: ~ (hyprland/arch)</span>
+            </div>
+            <div class="term-body" id="tb"></div>
+        </div>
+        <div class="skp">Davom etish uchun ekranga bosing yoki [Enter] bosing</div>
+    </div>
+
+    <!-- Asosiy Wrap Container -->
+    <div class="layout-wrapper">
+        <!-- Top Sticky Header Nav -->
+        <header class="main-header card-glass">
+            <div class="header-inner">
+                <div class="brand" id="brand-logo">
+                    <div class="logo-box">🎯</div>
+                    <div class="brand-text">
+                        <span class="brand-name">HR Quiz</span>
+                        <span class="brand-sub">Inson Resurslarini Boshqarish</span>
+                    </div>
+                </div>
+                
+                <!-- Tab Navigation (Testlar & Statistika) -->
+                <nav class="nav-tabs">
+                    <button class="nav-tab active" id="tab-btn-home" data-target="home">
+                        <span class="nav-icon">📚</span>
+                        <span class="nav-label">Testlar</span>
+                    </button>
+                    <button class="nav-tab" id="tab-btn-stats" data-target="stats">
+                        <span class="nav-icon">📊</span>
+                        <span class="nav-label">Statistika</span>
+                    </button>
+                </nav>
+            </div>
+        </header>
+
+        <main class="wrap">
+            <!-- SECTION 1: HOME -->
+            <section id="home" class="view">
+                <div class="hero">
+                    <div class="hero-badge">Just Nothing</div>
+                    <h1>Inson  Resurslarini  Boshqarish <br><span class="gradient-text">QUIZ  TEST</span></h1>
+                    <p>Nazariy bilimlaringizni sinang, imtihon simulyatsiyasidan o'ting hamda o'zlashtirish statistikangizni tahlil qiling.</p>
+                </div>
+                
+                <!-- Tezkor Ko'rsatkichlar (KPI Chips) -->
+                <div class="stats-grid" id="main-stats">
+                    <!-- JS Injected -->
+                </div>
+
+                <div class="section-header">
+                    <h2>🎯 Rejimni tanlang</h2>
+                    <p class="section-desc">O'zingizga qulay formatda test yechishni boshlang</p>
+                </div>
+
+                <div class="modes-grid">
+                    <button class="mode-card full-mode" id="btn-mode-all">
+                        <div class="mc-icon">📚</div>
+                        <div class="mc-content">
+                            <div class="mc-tag">To'liq Bazasi</div>
+                            <h3>To‘liq rejim</h3>
+                            <p id="desc-all">Barcha savollar ketma-ketligi. Har bir javobdan so'ng darhol to'g'ri variant ko'rsatiladi.</p>
+                        </div>
+                        <div class="mc-arrow">→</div>
+                    </button>
+
+                    <button class="mode-card exam-mode" id="btn-mode-rnd">
+                        <div class="mc-icon">⏱️</div>
+                        <div class="mc-content">
+                            <div class="mc-tag warning">Vaqtli Nazorat</div>
+                            <h3>Imtihon rejimi</h3>
+                            <p>25 ta tasodifiy savol, 25 daqiqali taymer bilan. Natijalar va xatolar tahlili oxirida.</p>
+                        </div>
+                        <div class="mc-arrow">→</div>
+                    </button>
+
+                    <button class="mode-card fix-mode" id="btn-mode-fix" style="display: none;">
+                        <div class="mc-icon">⚡</div>
+                        <div class="mc-content">
+                            <div class="mc-tag danger">Tahlil va Takrorlash</div>
+                            <h3>Xatolar ustida ishlash</h3>
+                            <p id="desc-fix">Oxirgi urinishda xato qilgan savollaringizni qayta yechib bilimlaringizni mustahkamlang.</p>
+                        </div>
+                        <div class="mc-arrow">→</div>
+                    </button>
+                </div>
+
+                <div class="section-header">
+                    <h2>📑 Bloklar bo‘yicha (30 tadan)</h2>
+                    <p class="section-desc">Mavzulashtirilgan 30 talik bo'limlar bo'yicha ketma-ket o'zlashtiring</p>
+                </div>
+                <div class="blocks-grid" id="blocks-container">
+                    <!-- JS Injected -->
+                </div>
+            </section>
+
+            <!-- SECTION 2: STATISTIKA (MUKAMMAL ANALITIKA DASHBOARD) -->
+            <section id="stats" class="view hide">
+                <div class="dashboard-header">
+                    <div>
+                        <h2>📊 Shaxsiy Statistika & Tahlil</h2>
+                        <p class="dashboard-sub">Barcha test urinishlaringiz, bloklar bo'yicha aniqlik va bilim ko'rsatkichlari</p>
+                    </div>
+                    <div class="dashboard-actions">
+                        <button class="btn btn-outline btn-sm" id="btn-export-stats">📥 Hisobotni yuklash</button>
+                        <button class="btn btn-danger-outline btn-sm" id="btn-reset-stats">🗑️ Tarixni tozalash</button>
+                    </div>
+                </div>
+
+                <!-- Statistika Asosiy Cardlar -->
+                <div class="kpi-banner card-glass">
+                    <div class="kpi-item">
+                        <span class="kpi-num gradient-text" id="st-total-attempts">0</span>
+                        <span class="kpi-label">Jami Urinishlar</span>
+                    </div>
+                    <div class="kpi-divider"></div>
+                    <div class="kpi-item">
+                        <span class="kpi-num text-emerald" id="st-avg-score">0%</span>
+                        <span class="kpi-label">O'rtacha Aniqlik</span>
+                    </div>
+                    <div class="kpi-divider"></div>
+                    <div class="kpi-item">
+                        <span class="kpi-num text-blue" id="st-best-score">0%</span>
+                        <span class="kpi-label">Eng Yuqori Natija</span>
+                    </div>
+                    <div class="kpi-divider"></div>
+                    <div class="kpi-item">
+                        <span class="kpi-num text-purple" id="st-total-time">0 daq</span>
+                        <span class="kpi-label">Jami Sarflangan Vaqt</span>
+                    </div>
+                </div>
+
+                <!-- Visual Charts Grids -->
+                <div class="charts-main-grid">
+                    <!-- Line Chart: Urinishlar Dinamikasi -->
+                    <div class="card-glass chart-card wide-chart">
+                        <div class="chart-header">
+                            <h3>📈 Urinishlar Natijalari Dinamikasi (%)</h3>
+                            <span class="chart-badge">Vaqt bo'yicha o'sish</span>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="statTrendChart"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Bar Chart: Bloklar Kesimida Aniqlik -->
+                    <div class="card-glass chart-card">
+                        <div class="chart-header">
+                            <h3>🧩 Bloklar Kesimida Aniqlik (%)</h3>
+                            <span class="chart-badge">Mavzular o'zlashtirilishi</span>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="statBlockChart"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Doughnut Chart: Umumiy Javoblar Taqsimoti -->
+                    <div class="card-glass chart-card">
+                        <div class="chart-header">
+                            <h3>🎯 Javoblar Taqsimoti</h3>
+                            <span class="chart-badge">Jami berilgan javoblar</span>
+                        </div>
+                        <div class="chart-container doughnut-box">
+                            <canvas id="statDistributionChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Bloklar Bo'yicha Batafsil Tahlil Jadvali/Ro'yxati -->
+                <div class="card-glass detail-section">
+                    <h3>📌 Bloklar Bo'yicha O'zlashtirish Holati</h3>
+                    <div class="block-progress-list" id="stats-blocks-detail">
+                        <!-- JS Injected -->
+                    </div>
+                </div>
+
+                <!-- Oxirgi Urinishlar Tarixi -->
+                <div class="card-glass history-section">
+                    <h3>📜 Test Topshirish Tarixi</h3>
+                    <div class="table-responsive">
+                        <table class="history-table">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Rejim / Nomi</th>
+                                    <th>Sana</th>
+                                    <th>Vaqt</th>
+                                    <th>To'g'ri / Jami</th>
+                                    <th>Foiz</th>
+                                </tr>
+                            </thead>
+                            <tbody id="history-table-body">
+                                <!-- JS Injected -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION 3: QUIZ (TEST YECHISH INTERFEYSI) -->
+            <section id="quiz" class="view hide">
+                <div class="quiz-top-bar card-glass">
+                    <div class="qb-info">
+                        <h3 class="qb-title" id="quiz-title">Test Nomi</h3>
+                    </div>
+                    <div class="qb-controls">
+                        <div class="qh-timer" id="quiz-timer">⏱ 00:00</div>
+                        <button class="btn btn-outline btn-sm" id="btn-exit">Chiqish</button>
+                    </div>
+                </div>
+
+                <!-- Visual Progress Bar -->
+                <div class="progress-wrapper">
+                    <div class="progress-bar-fill" id="quiz-progress"></div>
+                </div>
+
+                <!-- Savol Card -->
+                <div class="question-card card-glass">
+                    <div class="q-header-meta">
+                        <span class="q-num-pill" id="q-counter">SAVOL 1 / 30</span>
+                        <span class="q-difficulty-pill" id="q-difficulty">O'rta daraja</span>
+                    </div>
+                    <h2 class="q-text" id="q-text">Savol matni shu yerda bo'ladi?</h2>
+                    
+                    <div class="options-list" id="options-list">
+                        <!-- JS Injected -->
+                    </div>
+                </div>
+
+                <!-- Navigatsiya Tugmalari -->
+                <div class="quiz-nav">
+                    <button class="btn btn-outline" id="btn-prev">← Oldingi</button>
+                    <button class="btn btn-primary" id="btn-next">Keyingi →</button>
+                </div>
+
+                <!-- Savollar Xaritasi (Grid Map) -->
+                <div class="card-glass map-card">
+                    <div class="map-header">
+                        <span>Savollar Xaritasi</span>
+                        <span class="map-legend">
+                            <i class="dot-lgd ok"></i> To'g'ri
+                            <i class="dot-lgd bad"></i> Xato
+                            <i class="dot-lgd ans"></i> Belgilangan
+                        </span>
+                    </div>
+                    <div class="question-map" id="question-map">
+                        <!-- JS Injected -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION 4: RESULT (YAKUNIY NATIJALAR) -->
+            <section id="result" class="view hide">
+                <div class="card-glass result-hero-card">
+                    <div class="result-hero-grid">
+                        <div class="donut-wrapper">
+                            <canvas id="scoreChart"></canvas>
+                            <div class="donut-score-text" id="score-percent">0%</div>
+                        </div>
+                        <div class="result-info">
+                            <h2 id="res-greeting">A'lo Natija! 🏆</h2>
+                            <p id="res-msg">Siz mazkur bo'limdagi barcha savollarni muvaffaqiyatli o'zlashtirdingiz.</p>
+                            
+                            <div class="kpi-grid">
+                                <div class="kpi-box success">
+                                    <span class="kpi-val" id="kpi-correct">0</span>
+                                    <span class="kpi-lbl">To‘g‘ri</span>
+                                </div>
+                                <div class="kpi-box danger">
+                                    <span class="kpi-val" id="kpi-wrong">0</span>
+                                    <span class="kpi-lbl">Xato</span>
+                                </div>
+                                <div class="kpi-box warning">
+                                    <span class="kpi-val" id="kpi-skipped">0</span>
+                                    <span class="kpi-lbl">O‘tkazilgan</span>
+                                </div>
+                                <div class="kpi-box info">
+                                    <span class="kpi-val" id="kpi-time">00:00</span>
+                                    <span class="kpi-lbl">Vaqt</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Natijaviy Grafilar -->
+                <div class="charts-row">
+                    <div class="card-glass chart-panel">
+                        <h3>📈 Urinishlar Dinamikasi</h3>
+                        <div class="chart-wrapper">
+                            <canvas id="resTrendChart"></canvas>
+                        </div>
+                    </div>
+                    <div class="card-glass chart-panel">
+                        <h3>📊 Ushbu Testdagi Aniqlik</h3>
+                        <div class="chart-wrapper">
+                            <canvas id="resBarChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Harakat Tugmalari -->
+                <div class="action-buttons">
+                    <button class="btn btn-primary" id="btn-retry">Qayta urinish</button>
+                    <button class="btn btn-emerald" id="btn-fix-errors" style="display: none;">Xatolar ustida ishlash</button>
+                    <button class="btn btn-outline" id="btn-view-full-stats">📊 To'liq Statistikani Ko'rish</button>
+                    <button class="btn btn-outline" id="btn-home">Bosh sahifa</button>
+                </div>
+
+                <!-- Xatolar Tahlili -->
+                <div class="card-glass errors-section">
+                    <div class="errors-header">
+                        <h3>🔍 Xatolar va Tahlil</h3>
+                        <div class="filter-tabs" id="error-filters">
+                            <button class="ft-btn active" data-filter="all">Hammasi (<span id="fc-all">0</span>)</button>
+                            <button class="ft-btn" data-filter="wrong">Xato (<span id="fc-wrong">0</span>)</button>
+                            <button class="ft-btn" data-filter="skipped">O'tkazilgan (<span id="fc-skipped">0</span>)</button>
+                        </div>
+                    </div>
+                    <div class="errors-list" id="errors-container">
+                        <!-- JS Injected -->
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer class="footer">
+            <div class="footer-content">
+                <p>Designed for Professional HR Education & Training</p>
+                <p class="copyright">crafted by <span class="emerald-text">SalmonCS</span> &bull; 2026</p>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Scripts -->
+    <script src="questions.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
